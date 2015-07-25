@@ -11,7 +11,7 @@
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details. 
+ * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
@@ -1357,9 +1357,9 @@ static adv_error video_init_state(struct advance_video_context* context, struct 
 		best_vclock = context->state.game_fps;
 
 		video_init_crtc_make_fake(context, "generate", best_size_x, best_size_y);
+		video_init_crtc_make_fake(context, "generate-double-y", best_size_x, best_size_2y);
+		video_init_crtc_make_fake(context, "generate-double-x", best_size_2x, best_size_y);
 		video_init_crtc_make_fake(context, "generate-double", best_size_2x, best_size_2y);
-		video_init_crtc_make_fake(context, "generate-triple", best_size_3x, best_size_3y);
-		video_init_crtc_make_fake(context, "generate-quad", best_size_4x, best_size_4y);
 	} else {
 		unsigned long long factor_x;
 		unsigned long long factor_y;
