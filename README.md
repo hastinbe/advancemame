@@ -15,3 +15,9 @@ The official site of AdvanceMAME/MESS is :
 
     http://www.advancemame.it/
 
+RetroPie
+--------
+To compile use the following configure options (change prefix accordingly):
+```shell
+./configure CFLAGS="-pipe -O2 -mcpu=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard -fsigned-char" LDFLAGS="-s -lm -Wl,--no-as-needed" --prefix="/opt/retropie/emulators/advmame/1.3"
+```
