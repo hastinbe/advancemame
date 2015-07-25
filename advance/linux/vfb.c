@@ -268,7 +268,7 @@ static void fb_preset(struct fb_var_screeninfo* var, unsigned pixelclock, unsign
 	var->height = 0;
 	var->width = 0;
 	var->accel_flags = FB_ACCEL_NONE;
-	var->pixclock = (unsigned)(1000000000000LL / pixelclock);
+	var->pixclock = pixelclock;
 	var->left_margin = ht - hre;
 	var->right_margin = hrs - hde;
 	var->upper_margin = vt - vre;
@@ -587,9 +587,8 @@ adv_error fb_init(int device_id, adv_output output, unsigned overlay_size, adv_c
 		goto err_close;
 	}
 
-	fb_state.flags = VIDEO_DRIVER_FLAGS_MODE_PALETTE8 | VIDEO_DRIVER_FLAGS_MODE_BGR15 | VIDEO_DRIVER_FLAGS_MODE_BGR16 | VIDEO_DRIVER_FLAGS_MODE_BGR24 | VIDEO_DRIVER_FLAGS_MODE_BGR32
-		| VIDEO_DRIVER_FLAGS_PROGRAMMABLE_ALL
-		| VIDEO_DRIVER_FLAGS_OUTPUT_FULLSCREEN;
+	fb_state.flags = VIDEO_DRIVER_FLAGS_MODE_PALETTE8 | VIDEO_DRIVER_FLAGS_MODE_BGR16 | VIDEO_DRIVER_FLAGS_MODE_BGR24 | VIDEO_DRIVER_FLAGS_MODE_BGR32
+		| VIDEO_DRIVER_FLAGS_OUTPUT_WINDOW;
 
 	if (fb_detect() != 0) {
 		goto err_close;
@@ -1120,13 +1119,9 @@ adv_error fb_mode_generate(fb_video_mode* mode, const adv_crtc* crtc, unsigned f
 {
 	assert(fb_is_active());
 
-	if (crtc_is_fake(crtc)) {
-		error_nolog_set("Not programmable modes are not supported.\n");
+	if (!crtc_is_fake(crtc)) {
 		return -1;
 	}
-
-	if (video_mode_generate_check("fb", fb_flags(), 8, 2048, crtc, flags)!=0)
-		return -1;
 
 	mode->crtc = *crtc;
 	mode->index = flags & MODE_FLAGS_INDEX_MASK;
