@@ -48,6 +48,9 @@
 void joystickb_reg_driver_all(adv_conf* context)
 {
 	/* the order is also the detection precedence */
+#ifdef USE_JOYSTICK_SDL
+	joystickb_reg_driver(context, &joystickb_sdl_driver);
+#endif
 #ifdef USE_JOYSTICK_EVENT
 	joystickb_reg_driver(context, &joystickb_event_driver);
 #endif
@@ -59,9 +62,6 @@ void joystickb_reg_driver_all(adv_conf* context)
 #endif
 #ifdef USE_JOYSTICK_LGRAWINPUT
 	joystickb_reg_driver(context, &joystickb_lgrawinput_driver);
-#endif
-#ifdef USE_JOYSTICK_SDL
-	joystickb_reg_driver(context, &joystickb_sdl_driver);
 #endif
 #ifdef USE_JOYSTICK_ALLEGRO
 	joystickb_reg_driver(context, &joystickb_allegro_driver);
